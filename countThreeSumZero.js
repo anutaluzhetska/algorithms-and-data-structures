@@ -61,4 +61,6 @@ for (let i = 0; i < length; i++) {
 }
 
 console.log("Generated array: ", [...randomArray]);
-console.log("Combinations found: ", countThreeSumZero(randomArray));
+console.log("Combinations found: ", countThreeSumZero(randomArray)); 
+
+
