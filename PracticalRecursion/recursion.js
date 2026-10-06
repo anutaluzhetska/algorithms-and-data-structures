@@ -31,6 +31,16 @@ function isPowerOfTwo(n) {
     isPowerOfTwo(Math.floor(n / 2));
 }
 
+// Точна степінь двійки(через двійкову систему )
+function isPowerOfTwo2(n) {
+    if ((n - 1) & n) {
+        console.log("No");
+    }
+    else {
+        console.log("Yes");
+    }
+}
+
 // Сума цифр числа
 function sumOfDigits(n) {
     if (n === 0) return 0;
@@ -40,15 +50,19 @@ function sumOfDigits(n) {
 // Цифри числа справа наліво
 function digitsRightToLeft(n) {
     console.log(n % 10);
-    if (Math.floor(n / 10) === 0) return;
-    digitsRightToLeft(Math.floor(n / 10));
+   
+    if (Math.floor(n / 10) !== 0) {
+        digitsRightToLeft(Math.floor(n / 10));
+    }
 }
 
 // Цифри числа зліва направо
 function digitsLeftToRight(n) {
+    
     if (Math.floor(n / 10) !== 0) {
         digitsLeftToRight(Math.floor(n / 10));
     }
+
     console.log(n % 10);
 }
 
@@ -59,8 +73,9 @@ console.log("\n--- Завдання 2 ---");
 printAToB(5, 1); 
 
 console.log("\n--- Завдання 3 ---");
-isPowerOfTwo(8); 
-isPowerOfTwo(3); 
+isPowerOfTwo2(6); 
+isPowerOfTwo2(1); 
+isPowerOfTwo2(1024); 
 
 console.log("\n--- Завдання 4 ---");
 console.log(sumOfDigits(179)); 
