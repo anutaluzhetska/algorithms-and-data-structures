@@ -1,6 +1,6 @@
 //  Метод генерації масиву заданої довжини в заданому діапазоні
 function generateArray(length, min, max) {
-    return Array.from({ length }, () => Math.floor(Math.random() * (max - min +1)) + min);
+    return Array.from({ length }, () => Math.floor(Math.random() * (max - min + 1)) + min);
 }
 
 // Метод виведення елементів масиву у специфічному форматі 
@@ -12,8 +12,9 @@ function printArray(arr) {
 // Функція для перевірки, чи відсортований масив 
 function isArraySorted(arr, isAscending) {
     for (let i = 0; i < arr.length - 1; i++) {
-        if (isAscending && arr[i] > arr[i + 1]) return false;
-        if (!isAscending && arr[i] < arr[i + 1]) return false;
+        if (isAscending && arr[i] > arr[i + 1] ||
+                !isAscending && arr[i] < arr[i + 1]) 
+            return false;
     }
     return true;
 }
@@ -22,13 +23,16 @@ function isArraySorted(arr, isAscending) {
 function bubbleSort(arr, isAscending) {
     let sortedArr = [...arr];
     let n = sortedArr.length;
-    for (let i = 0; i < n - 1; i++) {
+    let isSwapper = true;
+    for (let i = 0; i < n - 1  && isSwapper; i++) {
+        isSwapper = false;
         for (let j = 0; j < n - i - 1; j++) {
-            let condition = isAscending ? sortedArr[j] > sortedArr[j + 1] : sortedArr[j] < sortedArr[j + 1];
-            if (condition) {
+            if (isAscending ? sortedArr[j] > sortedArr[j + 1] : sortedArr[j] < sortedArr[j + 1]) {
+        
                 let temp = sortedArr[j];
                 sortedArr[j] = sortedArr[j + 1];
                 sortedArr[j + 1] = temp;
+                isSwapper = true;
             }
         }
     }
@@ -71,23 +75,35 @@ function selectionSort(arr, isAscending) {
     return sortedArr;
 }
 
-const ARRAY_SIZE = 2500;
+const ARRAY_SIZE = 100000;
 const isAscending = true;
 
 // Генеруємо несортований масив 
-const unsortedArray = generateArray(ARRAY_SIZE, 1, 10000);
+const unsortedArray = generateArray(ARRAY_SIZE, -100000, 100000);
 
 // Перевіряємо початковий масив
+console.log("-> Перевірка: Початковий масив:");
 if (isArraySorted(unsortedArray, isAscending)) {
-    console.log("-> Перевірка: Початковий масив вже відсортовано. Виводжу масив:");
-    printArray(unsortedArray);
+    
+    console.log("Вже відсортовано.");
 } else {
-    console.log("-> Перевірка: Початковий масив НЕ відсортовано. Початок сортування...");
-    
+    console.log("НЕ відсортовано.");
+}
     // Виконуємо сортування масиву методом Insertion Sort
-    const sortedArray = insertionSort(unsortedArray, isAscending);
-    
+
+    console.time("bubbleSort");
+    const sortedArray = bubbleSort(unsortedArray, isAscending);
+    console.timeEnd("bubbleSort");
     console.log("\n-> Результат сортування:");
 
-    printArray(sortedArray);
+//    console.time("bubbleSort2");
+  //  const sortedArray2 = bubbleSort(sortedArray, isAscending);
+    //console.timeEnd("bubbleSort2");
+
+ if (isArraySorted(sortedArray, isAscending)) {
+    
+    console.log("Вже відсортовано.");
+} else {
+    console.log("НЕ відсортовано.");
 }
+
