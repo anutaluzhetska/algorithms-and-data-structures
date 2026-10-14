@@ -1,10 +1,12 @@
 // Функція для генерації масиву випадкових цілих чисел у заданому діапазоні
 function generateRandomArray(size, min, max) {
+    if (size <= 0) return [];
     return Array.from({ length: size }, () => Math.floor(Math.random() * (max - min + 1)) + min);
 }
 
 // Функція для перевірки, чи відсортований масив
 function isSorted(arr, isAscending = true) {
+    if (!Array.isArray(arr) || arr.length <= 1) return true;
     for (let i = 0; i < arr.length - 1; i++) {
         if (isAscending) {
             if (arr[i] > arr[i + 1]) return false;
@@ -18,6 +20,15 @@ function isSorted(arr, isAscending = true) {
 // QUICK SORT
 // Функція розбиття (Partition)
 function partition(arr, isAscending, low, high) {
+
+    let pivotIndex = Math.floor(Math.random() * (high - low + 1)) + low;
+
+   // let pivotIndex = Math.floor((low + high) / 2); -- Вибір півота як елемента посередині підмасиву
+
+    let tempPivot = arr[pivotIndex];
+    arr[pivotIndex] = arr[high];
+    arr[high] = tempPivot;
+
     let pivot = arr[high];
     let i = low - 1;
 
@@ -41,6 +52,8 @@ function partition(arr, isAscending, low, high) {
 
 // Головна функція сортування Quick Sort
 function quickSort(arr, isAscending = true, low = 0, high = arr.length -1) {
+    if(!Array.isArray(arr) || arr.length <= 1) return arr;
+
     if (low < high) {
         let pi = partition(arr, isAscending, low, high);
 
@@ -82,6 +95,8 @@ function heapify(arr, n, i, isAscending) {
 
 // Головна функція Heap Sort
 function heapSort(arr, isAscending = true) {
+    if (!Array.isArray(arr) || arr.length <= 1) return arr;
+
     let n = arr.length;
 
     for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
@@ -98,7 +113,7 @@ function heapSort(arr, isAscending = true) {
     return arr;
 }
 
-const ARRAY_SIZE = 100000;
+const ARRAY_SIZE = 1000000;
 const originalArray = generateRandomArray(ARRAY_SIZE, -1000, 1000);
 const sortAscending = true;
 
@@ -118,4 +133,16 @@ console.log(`Результат QuickSort: ${isSorted(arrForQuick, sortAscending
 console.time("HeapSort");
 heapSort(arrForHeap, sortAscending);
 console.timeEnd("HeapSort");
+console.log(`Результат HeapSort: ${isSorted(arrForHeap, sortAscending) ? "Відсортовано коректно" : "ПОМИЛКА сортування"}`);
+
+
+console.time("QuickSort2");
+quickSort(arrForQuick, sortAscending);
+console.timeEnd("QuickSort2");
+console.log(`Результат QuickSort: ${isSorted(arrForQuick, sortAscending) ? "Відсортовано коректно" : "ПОМИЛКА сортування"}\n`);
+
+// Тест Heap Sort
+console.time("HeapSort2");
+heapSort(arrForHeap, sortAscending);
+console.timeEnd("HeapSort2");
 console.log(`Результат HeapSort: ${isSorted(arrForHeap, sortAscending) ? "Відсортовано коректно" : "ПОМИЛКА сортування"}`);
